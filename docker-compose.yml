@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: cems5-laravel-app
+    container_name: cems-laravel-app
     restart: always
     ports:
       - "8080:80"
@@ -24,12 +24,11 @@ services:
       - db
     volumes:
       - .:/var/www/html
-      - /var/www/html/vendor
 
   # MariaDB Database Service
   db:
     image: mariadb:10.6
-    container_name: cems5-laravel-db
+    container_name: cems-laravel-db
     restart: always
     environment:
       - MARIADB_DATABASE=cems
@@ -39,9 +38,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - cems5-laravel-db-data:/var/lib/mysql
+      - cems-laravel-db-data:/var/lib/mysql
       # Automatically import SQL file on first startup
-      - ./old-app/cems.sql:/docker-entrypoint-initdb.d/cems.sql
+#      - ./old-app/cems.sql:/docker-entrypoint-initdb.d/cems.sql
+      - ./cems-laravel.sql:/docker-entrypoint-initdb.d/cems.sql
 
 volumes:
-  cems5-laravel-db-data:
+  cems-laravel-db-data:
