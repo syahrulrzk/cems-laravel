@@ -10,16 +10,11 @@ services:
     restart: always
     ports:
       - "8080:80"
+      - "5173:5173" # Port untuk Vite dev server
+    env_file:
+      - .env
     environment:
       - DB_HOST=db
-      - DB_CONNECTION=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=cems
-      - DB_USERNAME=cems_user
-      - DB_PASSWORD=cems_password
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - APP_KEY=base64:7K58z58z58z58z58z58z58z58z58z58z58z58z58z58=
     depends_on:
       db:
         condition: service_healthy
@@ -36,11 +31,13 @@ services:
     image: mariadb:10.6
     container_name: cems-laravel-db
     restart: always
+    env_file:
+      - .env
     environment:
-      - MARIADB_DATABASE=cems
-      - MARIADB_USER=cems_user
-      - MARIADB_PASSWORD=cems_password
-      - MARIADB_ROOT_PASSWORD=root_password
+      - MARIADB_DATABASE=${DB_DATABASE:-cems}
+      - MARIADB_USER=${DB_USERNAME:-cems_user}
+      - MARIADB_PASSWORD=${DB_PASSWORD:-cems_password}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD:-root_password}
     ports:
       - "3306:3306"
     volumes:

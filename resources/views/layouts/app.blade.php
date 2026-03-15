@@ -7,7 +7,7 @@
     <title>@yield('title', 'CEMS')</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico') }}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/pickadate/pickadate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
@@ -26,71 +26,147 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fullcalendar/main.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3f37c9;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
         .main-menu.menu-dark .navigation > li.active > a, 
         .main-menu.menu-dark .navigation > li.nav-item.open > a, 
         .main-menu.menu-dark .navigation > li.sidebar-group-active > a {
-            background: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
-            box-shadow: 0 0 10px 1px rgba(115, 103, 240, 0.7);
-            border-radius: 4px;
+            background: linear-gradient(118deg, #4361ee, rgba(67, 97, 238, 0.7));
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            border-radius: 8px;
         }
+        
         .main-menu.menu-light .navigation > li.active > a {
-            background: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
-            box-shadow: 0 0 10px 1px rgba(115, 103, 240, 0.7);
+            background: linear-gradient(118deg, #4361ee, rgba(67, 97, 238, 0.7));
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
             color: #fff;
-            font-weight: 400;
-            border-radius: 4px;
+            font-weight: 500;
+            border-radius: 8px;
         }
+        
         .card {
             border: none;
-            box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
-            transition: all 0.3s ease-in-out;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
         }
+        
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 32px 0 rgba(34, 41, 47, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
+        
         .dark-layout .card {
-            background-color: #10163a;
-            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+            background-color: #1e293b;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
         }
+        
         .dark-layout .main-menu {
-            background-color: #10163a;
+            background-color: #1e293b;
         }
+        
         .dark-layout .header-navbar {
-            background-color: #10163a !important;
+            background-color: #1e293b !important;
         }
+        
         .navigation i {
-            margin-right: 1.1rem;
-            font-size: 1.2rem;
-            width: 1.2rem;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+            width: 1.1rem;
             text-align: center;
         }
+        
         .brand-logo img {
-            max-height: 40px;
+            max-height: 36px;
         }
+        
+        .header-navbar {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .dropdown-menu {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #4361ee;
+            border-color: #4361ee;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3f37c9;
+            border-color: #3f37c9;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .form-control:focus {
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+        
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            border-radius: 6px;
+        }
+        
+        .page-heading {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .footer {
+            border-top: 1px solid #e2e8f0;
+        }
+        
         .tooltip-inner {
             max-width: 600px;
             text-align: left;
         }
+        
         .fc-daygrid-day-frame {
-            height : 100px;
+            height: 100px;
         }
+        
         .fc-event-title-container, .fc-daygrid-event {
             text-align: center;
-            margin-top : -10px;
+            margin-top: -10px;
             padding: 10px 0;
             background-color: #fff;
             background-image: url('{{ asset('assets/cloud.jpg') }}');
             background-repeat: no-repeat;
             background-position: center center;
         }
+        
         .fc-event-title {
             font-size: 24px;
-            color: #000;			
+            color: #000;
         }
-        /* Smooth transitions */
+        
         * {
-            transition: background-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
     </style>
     @yield('styles')
@@ -160,7 +236,7 @@
                         <div class="brand-logo"></div>
                         <h2 class="brand-text mb-0">CEMS</h2>
                     </a></li>
-                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block primary" data-ticon="icon-disc"></i></a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" href="javascript:void(0)"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block primary" data-ticon="icon-disc"></i></a></li>
             </ul>
         </div>
         <div class="shadow-bottom"></div>

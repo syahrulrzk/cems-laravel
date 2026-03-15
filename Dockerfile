@@ -1,4 +1,4 @@
-# Use PHP 8.2 with Apache
+# Use PHP 8.4 with Apache
 FROM php:8.4-apache
 
 # Install system dependencies
@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -56,8 +59,10 @@ RUN mkdir -p /var/www/html/storage/framework/sessions \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Fix permissions for host machine development
-# Allow www-data to write to mounted volumes
-RUN echo "www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin" >> /etc/passwd
+# Match www-data host UID/GID (usually 1000)
+ARG UID=1000
+ARG GID=1000
+RUN usermod -u ${UID} www-data && groupmod -g ${GID} www-data
 
 # Expose port 80
 EXPOSE 80
