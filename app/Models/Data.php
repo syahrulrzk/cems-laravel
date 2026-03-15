@@ -23,4 +23,9 @@ class Data extends Model
         'cerobong_id',
         'modified_at',
     ];
+
+    public function cerobong()
+    {
+        return $this->belongsTo(Cerobong::class, 'cerobong_id', 'cerobong_id');
+    }
 }

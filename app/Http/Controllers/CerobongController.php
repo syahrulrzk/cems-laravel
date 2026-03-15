@@ -86,4 +86,22 @@ class CerobongController extends Controller
             "data" => $formattedData
         ]);
     }
+
+    public function apiIndex()
+    {
+        $cerobong = Cerobong::all();
+        return response()->json([
+            'success' => true,
+            'data' => $cerobong
+        ]);
+    }
+
+    public function apiShow($id)
+    {
+        $cerobong = Cerobong::with(['data', 'parameters'])->findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'data' => $cerobong
+        ]);
+    }
 }

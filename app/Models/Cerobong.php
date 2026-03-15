@@ -9,6 +9,7 @@ class Cerobong extends Model
     protected $table = 'cerobong';
     protected $primaryKey = 'cerobong_id';
     public $timestamps = false;
+    public $incrementing = false;
     protected $fillable = [
         'cerobong_code',
         'cerobong_name',
@@ -20,4 +21,14 @@ class Cerobong extends Model
         'cerobong_user',
         'cerobong_kirim_status',
     ];
+
+    public function data()
+    {
+        return $this->hasMany(Data::class, 'cerobong_id', 'cerobong_id');
+    }
+
+    public function parameters()
+    {
+        return $this->hasMany(Parameter::class, 'cerobong_id', 'cerobong_id');
+    }
 }

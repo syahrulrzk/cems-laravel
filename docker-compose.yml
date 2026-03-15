@@ -19,11 +19,17 @@ services:
       - DB_PASSWORD=cems_password
       - APP_ENV=local
       - APP_DEBUG=true
-      - APP_KEY=base64:7K58z58z58z58z58z58z58z58z58z58z58z58z58z58= # Placeholder, should be regenerated
+      - APP_KEY=base64:7K58z58z58z58z58z58z58z58z58z58z58z58z58z58=
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/var/www/html
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # MariaDB Database Service
   db:
@@ -39,9 +45,13 @@ services:
       - "3306:3306"
     volumes:
       - cems-laravel-db-data:/var/lib/mysql
-      # Automatically import SQL file on first startup
-#      - ./old-app/cems.sql:/docker-entrypoint-initdb.d/cems.sql
-      - ./cems-laravel.sql:/docker-entrypoint-initdb.d/cems.sql
+      - ./cems_2026-03-15.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   cems-laravel-db-data:

@@ -170,4 +170,24 @@ class DashboardController extends Controller
 
         return response()->json([['waktu' => [], 'nameflow' => 'Flow', 'dataflow' => []]]);
     }
+
+    public function apiStats()
+    {
+        $totalCerobong = Cerobong::count();
+        $totalData = Data::count();
+        $validData = Data::where('status', 'valid')->count();
+        $invalidData = Data::where('status', 'invalid')->count();
+        $maintenanceData = Data::where('status', 'maintenance')->count();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'total_cerobong' => $totalCerobong,
+                'total_data' => $totalData,
+                'valid_data' => $validData,
+                'invalid_data' => $invalidData,
+                'maintenance_data' => $maintenanceData,
+            ]
+        ]);
+    }
 }

@@ -1,5 +1,4 @@
 # Use PHP 8.2 with Apache
-#FROM php:8.2-apache
 FROM php:8.4-apache
 
 # Install system dependencies
@@ -52,8 +51,13 @@ RUN mkdir -p /var/www/html/storage/framework/sessions \
              /var/www/html/storage/framework/views \
              /var/www/html/storage/framework/cache/data \
              /var/www/html/storage/logs \
+             /var/www/html/bootstrap/cache \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Fix permissions for host machine development
+# Allow www-data to write to mounted volumes
+RUN echo "www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin" >> /etc/passwd
 
 # Expose port 80
 EXPOSE 80
